@@ -1,4 +1,6 @@
-# Medicine_Pill_Image_Recognition_Challenge
+# Medicine_Pill_Image_Recognition_Challenge 
+VAIPE: Medicine Pill Image Recognition Challenge - AI4VN 2022
+
 
 # Log Team meeting:
 + 3 Challenges team for competition

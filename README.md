@@ -1,8 +1,8 @@
-# Medicine_Pill_Image_Recognition_Challenge 
+# AIO Vision - Medicine Pill Recognition
 VAIPE: Medicine Pill Image Recognition Challenge - AI4VN 2022
 
 
-# Log Team meeting:
+## Log Team meeting:
 + 3 Challenges team for competition
 + 4 Premilary tasks: 
 ```
@@ -14,6 +14,5 @@ VAIPE: Medicine Pill Image Recognition Challenge - AI4VN 2022
      
 + Meeting: Every Monday & Thursday night time (8h30 PM)
 
-     
 
 

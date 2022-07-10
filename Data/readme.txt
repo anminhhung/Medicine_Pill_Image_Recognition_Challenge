@@ -1,0 +1,1 @@
+segment_img.py convert data which labeld on COCO format to segmented imgs

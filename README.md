@@ -21,25 +21,54 @@
 ```
 
 
-+ Main folder
++ Folder Structure
 
-```  
-     |---- configs
-     |---- data
-     |---- models
-     |---- utils
-     |---- scripts
-```
+  ```
+  Main-folder/
+  │
+  ├── config/ 
+  │   ├── config.py - configuration
+  │
+  ├── data/ - default directory for storing input data
+  │
+  ├── data_loader/ - anything about data loading goes here
+  │   └── data_loaders.py
+  |
+  ├── nets/ - this folder contains any net of your project.
+  │   ├── model.py
+  │   ├── metric.py
+  │   └── loss.py
+  │
+  ├── saved/
+  │   ├── models/ - trained models are saved here
+  │   └── log/ - default logdir for tensorboard and logging 
+  │   └── submission/ -  submission file are saved here
+  │
+  ├── scripts/ - main function 
+  │   └── pipeline.py
+  │   └── OCR.py
+  │   └── segment.py
+  │
+  ├── tools/ - open source are saved here
+  │   └── detectron2 dir
+  │   └── ...
+  │  
+  └── utils/ - small utility functions
+      ├── util.py
+      └── ...
+  ```
 ## Pretrained models will be stored in Google Drive!
-```
-HungAn will be updated
-```
+
+Link pretrained models: [Link GG drive](https://drive.google.com/drive/u/0/folders/1IQZZ5XPQfUKYhjZxisoazkNoHUT6qEap)
+
 
 ## 🥰 Demo
 Run a quick demo would be like:
 
-```
-python3 demo.py --config-file configs/setup.yaml --input ./data/pills --models models/model_12345.pth
+```python 
+# python3 demo.py --config-file configs/setup.yaml --input ./data/pills --models models/model_12345.pth
+
+python demo.py
 ```
 
 

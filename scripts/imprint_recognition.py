@@ -1,7 +1,9 @@
+import sys
+sys.path.append('.')
+
 import cv2
 import os 
-import glob2
-from tqdm import tqdm
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 from vietocr.tool.predictor import Predictor
 from vietocr.tool.config import Cfg
@@ -10,7 +12,7 @@ from nets import CRAFT_DETECTOR
 from configs.config import init_config
 
 # config
-CFG = init_config()
+CFG = init_config(config_path="configs/config.ini")
 DEVICE = CFG["device"]["device"]
 craft_weight_path = CFG["craft"]["weight_path"]
 vietocr_weight_path = CFG["vietocr"]["weight_path"]
@@ -61,5 +63,6 @@ def predict_image(image_path, visual=False, result_dir="saved/ocr_results"):
     return list_bbox, list_text
 
 if __name__ == "__main__":
+    print("[INFO] Starting........")
     list_bbox, list_text = predict_image("data/OCR_imprint/demo.jpg")
     print(list_text)

@@ -48,7 +48,11 @@
   │   └── pipeline.py
   │   └── OCR.py
   │   └── segment.py
-  │
+  |
+  ├── test/ - test functions
+  │   └── run.py
+  │   └── ...
+  |
   ├── tools/ - open source are saved here
   │   └── detectron2 dir
   │   └── ...

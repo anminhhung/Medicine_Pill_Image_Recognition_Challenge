@@ -136,3 +136,21 @@ dmypy.json
 # models
 *.pth 
 *.pt
+
+# apex dir
+apex/
+
+# Pycharm editor settings
+.idea
+.vscode
+.python-version
+
+# compilation and distribution
+__pycache__
+_ext
+*.pyc
+*.so
+AdelaiDet.egg-info/
+maskrcnn_benchmark.egg-info/
+build/
+dist/

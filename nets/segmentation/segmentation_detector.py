@@ -21,18 +21,18 @@ from .detectron2.config import get_cfg
 
 class Segmentation_Detectron2(object):
       
-    def __init__(self, json_path,images_path,name_data):
-        self.model="configs/COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml"
+    def __init__(self, json_path, images_path, name_data):
+        self.model = "configs/COCO-InstanceSegmentation/mask_rcnn_X_101_32x8d_FPN_3x.yaml"
 
         self.weight='model_final.pth'
 
-        self.name_dataset='pill'
+        self.name_dataset = name_data
 
-        self.lr=0.0001
+        self.lr = 0.0001
 
-        self.max_iter=1000
+        self.max_iter = 1000
 
-        self.bs=32
+        self.bs = 32
 
         self.cfg = get_cfg()
 
@@ -58,14 +58,14 @@ class Segmentation_Detectron2(object):
 
         self.pill_metadata = self.regist_data(json_path,images_path,name_data)
 
-    # Hàm đăng kí data, nhận đầu vào là đường dẫn file json ( file gán nhãn ), đường dẫn file chứa các ảnh, tên đăng kí ( em thường để là 'pill' )
+    # Hàm đăng kí data, nhận đầu vào là đường dẫn file json ( file gán nhãn ), đường dẫn file chứa các ảnh, tên đăng kí
     def regist_data(self,json_path,images_path,name_data):  
       register_coco_instances(name_data, {}, json_path, images_path)
       dataset_dicts = DatasetCatalog.get(name_data)
       metadata = MetadataCatalog.get(name_data)
       return metadata
 
-    # Hàm visualize dự đoán đầu ra của 1 tập ảnh, đầu vào là list đường dẫn ảnh, database là đầu ra của hàm regist_data bên trên ( data được đăng kí )
+    # Hàm visualize dự đoán đầu ra của 1 tập ảnh, đầu vào là list đường dẫn ảnh, metadata là đầu ra của hàm regist_data bên trên ( data được đăng kí )
     def visualize_prediction(self,images_path, metadata):
         os.makedirs('output_images',exist_ok=True)
         for image_path in images_path:
@@ -82,7 +82,7 @@ class Segmentation_Detectron2(object):
           image_path = image_path.split('.')[0]
           cv2.imwrite('output_images/'+image_path+'output'+'.jpg',v.get_image()[:,:,::-1])
 
-    # Hàm train, nhận đầu vào mà file model.yaml, file weight ( của em pretrained, mọi người có thể dùng file riêng ), tên data 'pill' ( cái này phải trùng với tên được đăng kí)
+    # Hàm train
     def train(self):
         os.makedirs(self.cfg.OUTPUT_DIR, exist_ok=True)
         trainer = DefaultTrainer(self.cfg)
@@ -116,22 +116,9 @@ class Segmentation_Detectron2(object):
                 con = con*np.array(moi.unsqueeze(2))
                 if resize:
                   con = cv2.resize(con,size)
-                output_final.append(con)
-            #  output_final.append(output)
+                output.append(con)
+            output_final.append(output)
         return output_final
-
-# Hướng dẫn sử dụng :
-
-# Muốn visualize prediction của 1 tập ảnh ( tạo thư mục chứa các ảnh được predict ), làm 2 bước :
-# Bước 1 : Đăng kí data, database = regist_data(json_path, images_path, name_data)        
-# Bước 2 : Dùng hàm visualize_prediction(images_path,database)
-
-# Muốn trả ra list chứa từng viên được instance segment :
-# Dùng hàm tra_ra_tung_vien_thuoc(input_image, resize = True, size = (28,28))     
-
-# Muốn train :
-# Bước 1 : Đăng kí data, database = regist_data(json_path, images_path, name_data)  ( Nếu đăng kí rồi thì không cần nữa ạ )   
-# Bước 2 : Dùng hàm train(), sau khi train xong, có được một file weight, có thể dùng để đi predict hoặc ko có thể dùng file weight có sẵn của em ( Vinh )
 
 if __name__ == '__main__':
     segmentation = Segmentation_Detectron2('dataset/label.json','dataset/train_images','pill')

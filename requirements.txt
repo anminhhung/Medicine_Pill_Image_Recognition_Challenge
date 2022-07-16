@@ -2,5 +2,11 @@
 
 # segmentation
 pyyaml
-git+https://github.com/facebookresearch/detectron2.git
+cloudpickle
+pycocotools
+fvcore
+omegaconf
+fairscale
+timm
+#git+https://github.com/facebookresearch/detectron2.git
 

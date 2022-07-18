@@ -70,11 +70,28 @@ Link pretrained models: [Link GG drive](https://drive.google.com/drive/u/0/folde
 Run a quick demo would be like:
 
 ```python 
-# python3 demo.py --config-file configs/setup.yaml --input ./data/pills --models models/model_12345.pth
-
+#python3 demo.py --config-file configs/setup.yaml --input ./data/pills --models models/model_12345.pth
 python demo.py
 ```
 
+
+## 🔥 Dataset
+
+Original 
+
+Website: https://vaipe.org/#challenge
+Train: [Link GG drive](https://drive.google.com/drive/folders/1F7JvhcAIzZews4u8Cba_HntUZk25jQdh)
+Test : [Link GG drive](https://drive.google.com/file/d/146BJ1ER43mOUS7IL4Ewgs2vaAylCXt2l/view?fbclid=IwAR2kZtM6YrtvaiZisWZdBB69_mBYRs2BI_jWDLvtaMZ-6j-vAq6da5jpP0E)
++ File train: có 9502 ảnh thuốc(kèm json) + 1173 ảnh đơn thuốc.
++ File test: có 1173 ảnh thuốc(kèm json) + 172 ảnh đơn thuốc)
+
+
+Kaggle Re-up
+```
+os.environ['KAGGLE_USERNAME'] = “tên user của em” # username from the json file
+os.environ['KAGGLE_KEY'] = “key tài khoản" # key from the json file
+!kaggle datasets download -d tommyngx/vaipepill2022
+```
 
 
 

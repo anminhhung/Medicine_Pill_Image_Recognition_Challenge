@@ -10,13 +10,13 @@ import matplotlib.pyplot as plt
 #from google.colab.patches import cv2_imshow
 
 # import some common detectron2 utilities
-from .detectron2 import model_zoo
-from .detectron2.data import MetadataCatalog, DatasetCatalog
-from .detectron2.data.datasets import register_coco_instances
-from .detectron2.utils.visualizer import Visualizer
-from .detectron2.engine import DefaultTrainer
-from .detectron2.engine import DefaultPredictor
-from .detectron2.config import get_cfg
+from detectron2 import model_zoo
+from detectron2.data import MetadataCatalog, DatasetCatalog
+from detectron2.data.datasets import register_coco_instances
+from detectron2.utils.visualizer import Visualizer
+from detectron2.engine import DefaultTrainer
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
 
 
 class Segmentation_Detectron2(object):

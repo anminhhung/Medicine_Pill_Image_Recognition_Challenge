@@ -58,6 +58,8 @@ class Segmentation_Detectron2(object):
 
         self.pill_metadata = self.regist_data(json_path,images_path,name_data)
 
+        self.predictor = DefaultPredictor(self.cfg)
+
     # Hàm đăng kí data, nhận đầu vào là đường dẫn file json ( file gán nhãn ), đường dẫn file chứa các ảnh, tên đăng kí
     def regist_data(self,json_path,images_path,name_data):  
       register_coco_instances(name_data, {}, json_path, images_path)
@@ -70,7 +72,7 @@ class Segmentation_Detectron2(object):
         os.makedirs('output_images',exist_ok=True)
         for image_path in images_path:
           im = cv2.imread(image_path)
-          outputs = self.instance_segment(image_path)
+          outputs = self.instance_segment(im)
           v = Visualizer(im[:, :, ::-1],
                     metadata = metadata, 
                     scale=0.5, 
@@ -90,18 +92,16 @@ class Segmentation_Detectron2(object):
         trainer.train()
 
     # Hàm xử lý ( được sài bên trong các hàm khác, không sài trực tiếp )
-    def instance_segment(self,img_path):  # đầu vào là ảnh RGB, đầu ra là instance
-        predictor = DefaultPredictor(self.cfg)
-
-        im = cv2.imread(img_path)
-        outputs = predictor(im)
+    def instance_segment(self,img):  # đầu vào là ảnh RGB, đầu ra là instance      
+        outputs = self.predictor(img)
         return outputs
 
     # Hàm nhận đầu vào là list các đường dẫn ảnh, trả ra list từng viên thuốc trong các ảnh đó
     def segmented_pills(self,image_paths,resize = True, size = (60,60)): 
         output_final = []
         for img_path in image_paths: 
-            predict = self.instance_segment(img_path) # Dự đoán đầu ra ( sau khi instance segmentation )
+            img = cv2.imread(img_path)
+            predict = self.instance_segment(img) # Dự đoán đầu ra ( sau khi instance segmentation )
             predict = predict["instances"].to("cpu")
 
             output = []

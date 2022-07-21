@@ -22,7 +22,7 @@ from detectron2.config import get_cfg
 class Segmentation_Detectron2(object):
       
     def __init__(self, json_path, images_path, name_data):
-        self.model = "configs/COCO-InstanceSegmentation/mask_rcnn_X_101_32x8d_FPN_3x.yaml"
+        self.model = "configs/COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml"
 
         self.weight='model_final.pth'
 

@@ -93,7 +93,12 @@ os.environ['KAGGLE_KEY'] = “key tài khoản" # key from the json file
 !kaggle datasets download -d tommyngx/vaipepill2022
 ```
 
+## Merge 108 classes -> 88 classes
 
-
+```
+# Load hash table
+read_dictionary = np.load('label88.npy',allow_pickle='TRUE').item()
+print(read_dictionary['1']) # nhập class cũ để xuất class mới!
+```
 
 

@@ -97,6 +97,7 @@ os.environ['KAGGLE_KEY'] = “key tài khoản" # key from the json file
 
 ```
 # Load hash table
+# Link: ./content/Medicine_Pill_Image_Recognition_Challenge/Data/pill_categories/label88.npy
 read_dictionary = np.load('label88.npy',allow_pickle='TRUE').item()
 print(read_dictionary['1']) # nhập class cũ để xuất class mới!
 ```

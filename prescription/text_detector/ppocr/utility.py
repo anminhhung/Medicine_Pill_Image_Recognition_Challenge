@@ -149,7 +149,7 @@ def draw_text_det_res(dt_boxes, img_path,save_path=None):
     result_txt_icdar=''
     for box in dt_boxes:
         box = np.array(box).astype(np.int32).reshape(-1, 2)
-        cv2.polylines(src_im, [box], True, color=(0, 0, 255), thickness=2)
+        cv2.polylines(src_im, [box], True, color=(0, 255, 0), thickness=2)
         poly_str = ','.join(
             [str(box[0][0]), str(box[0][1]), str(box[1][0]), str(box[1][1]), str(box[2][0]), str(box[2][1]),
              str(box[3][0]), str(box[3][1])])
@@ -164,6 +164,24 @@ def draw_text_det_res(dt_boxes, img_path,save_path=None):
             f.write(result_txt_icdar)
     return src_im
 
+def draw_text_det_img(dt_boxes, src_im,save_path=None):
+    result_txt_icdar=''
+    for box in dt_boxes:
+        box = np.array(box).astype(np.int32).reshape(-1, 2)
+        cv2.polylines(src_im, [box], True, color=(0, 255, 0), thickness=2)
+        poly_str = ','.join(
+            [str(box[0][0]), str(box[0][1]), str(box[1][0]), str(box[1][1]), str(box[2][0]), str(box[2][1]),
+             str(box[3][0]), str(box[3][1])])
+        if save_path is not None:
+            line = ','.join(
+                [str(box[0][0]), str(box[0][1]), str(box[1][0]), str(box[1][1]), str(box[2][0]), str(box[2][1]),
+                 str(box[3][0]), str(box[3][1])])
+            result_txt_icdar += line + ',\n'
+    if save_path is not None:
+        result_txt_icdar = result_txt_icdar.rstrip('\n')
+        with open(save_path, 'w', encoding='utf-8') as f:
+            f.write(result_txt_icdar)
+    return src_im
 
 def resize_img(img, input_size=600):
     """

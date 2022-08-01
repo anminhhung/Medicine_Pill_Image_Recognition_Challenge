@@ -1,9 +1,9 @@
 import torch
 from torch import nn
 
-import vietocr.model.vgg as vgg
-from vietocr.model.resnet import Resnet50
-from vietocr.model.resnet_fpn import resnet_fpn
+import prescription.text_recognizer.vietocr.vietocr.model.vgg as vgg
+from prescription.text_recognizer.vietocr.vietocr.model.resnet import Resnet50
+from prescription.text_recognizer.vietocr.vietocr.model.resnet_fpn import resnet_fpn
 
 class CNN(nn.Module):
     def __init__(self, backbone, **kwargs):

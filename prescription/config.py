@@ -1,7 +1,8 @@
 import os
 
-CONFIG_ROOT = '/home/dat09/VAIPE/' #os.path.dirname(__file__)
-OUTPUT_ROOT = '/home/dat09/VAIPE/output/prescription'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_ROOT = BASE_DIR
+OUTPUT_ROOT = BASE_DIR + "/output/"
 
 
 def full_path(sub_path, file=False):
@@ -24,7 +25,8 @@ def output_path(sub_path):
     return path
 
 gpu = None # None or "0","1","2"...
-dataset = 'train/prescription/image'
+# dataset = 'train/prescription/image'
+dataset = 'public_test/prescription/image'
 # mc_ocr_train_filtered
 # mc_ocr_private_test
 # wer_20210125
@@ -45,8 +47,8 @@ det_model_dir = full_path('prescription/text_detector/models/ch_ppocr_server_v2.
 det_visualize = True
 det_db_thresh = 0.3
 det_db_box_thresh = 0.3
-det_out_viz_dir = output_path('text_detector/{}/viz_imgs'.format(dataset))
-det_out_txt_dir = output_path('text_detector/{}/txt'.format(dataset))
+det_out_viz_dir = output_path('{}/'.format(dataset))
+det_out_txt_dir = output_path('{}/label'.format(dataset))
 
 # rotation corrector
 rot_drop_thresh = [.5, 2]

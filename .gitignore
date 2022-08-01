@@ -154,3 +154,4 @@ AdelaiDet.egg-info/
 maskrcnn_benchmark.egg-info/
 build/
 dist/
+data/public_test/

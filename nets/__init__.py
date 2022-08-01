@@ -1,1 +1,0 @@
-from nets.ocr.craft.detector import CRAFT_DETECTOR

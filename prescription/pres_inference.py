@@ -1,16 +1,4 @@
 # Copyright (c) 2020 PaddlePaddle Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 import os
 import sys
 
@@ -42,7 +30,7 @@ from prescription.text_recognizer.vietocr.vietocr.tool.config import Cfg
 config = Cfg.load_config_from_name('vgg_transformer')
 config['weights'] = BASE_DIR + "/prescription/text_recognizer/models/transformerocr.pth" #"1sWoYLzyk3MalZbNyBCf8WXsyTCEfBoxh" #
 config['cnn']['pretrained'] = False
-config['device'] = 'cpu' #'cuda:0' #
+config['device'] = 'cuda:0' #'cuda:0' #
 config['predictor']['beamsearch']= False
 recognizer = Predictor(config)
 
@@ -261,19 +249,17 @@ def get_all_drugnames(mapping_file):
 if __name__ == "__main__":
     args = utility.parse_args()
     from prescription.config import det_model_dir, raw_img_dir, det_visualize, \
-        det_out_viz_dir, det_out_txt_dir, det_db_thresh, det_db_box_thresh
+        det_out_viz_dir, det_db_thresh, det_db_box_thresh
 
     args.image_dir = raw_img_dir
     args.det_model_dir = det_model_dir
     args.det_db_thresh = det_db_thresh
     args.det_db_box_thresh = det_db_box_thresh
-    args.use_gpu = False
+    args.use_gpu = True
 
     # print(args)
     image_file_list = get_image_file_list(args.image_dir)
     text_detector = TextDetector(args)
-    count = 0
-    total_time = 0
 
     DrugList, AllDrugNames = get_all_drugnames(mapping_file)
     # print(DrugList)
@@ -284,6 +270,8 @@ if __name__ == "__main__":
     writer.writerow(header)
 
     for image_file in image_file_list:
+        print(40*"*")
+        t1 = time.time()
         img, flag = check_and_read_gif(image_file)
         if not flag:
             img = cv2.imread(image_file)
@@ -291,17 +279,11 @@ if __name__ == "__main__":
             logger.info("error in loading image:{}".format(image_file))
             continue
         src_im = img.copy()
-
         presname = os.path.basename(image_file)
-
         dt_boxes, elapse = text_detector(img)
         # print("boxes: ", dt_boxes[0], elapse)
-        if count > 0:
-            total_time += elapse
-        count += 1
-        logger.info("{} Predict time of {}: {}".format(count, image_file, elapse))
+
         img_name_pure = os.path.split(image_file)[-1]
-        output_txt_path = os.path.join(det_out_txt_dir, img_name_pure.replace('.jpg', '.txt'))
 
         drugname_boxes = []
         for box in dt_boxes:
@@ -339,21 +321,20 @@ if __name__ == "__main__":
 
                 drugname_boxes.append(box)
                 src_im = write_text(src_im, drugnameShow, (int(box[0][0]), int(box[0][1])))
-        src_im = utility.draw_text_det_img(drugname_boxes, src_im) #save_path=output_txt_path
+        src_im = utility.draw_text_det_img(drugname_boxes, src_im)
 
         if det_visualize:
             img_path = os.path.join(det_out_viz_dir, "{}".format(img_name_pure))
             cv2.imwrite(img_path, src_im)
             logger.info("The visualized image saved in {}".format(img_path))
 
+        infer_time = time.time() - t1
+        logger.info("Predict time of {}: {}".format(presname, infer_time))
 
 
-    #     cv2.imshow("pres", src_im)
-    #     if cv2.waitKey(0) == ord("q"):
-    #         break
-    # cv2.destroyAllWindows()
-
-    if count > 1:
-        logger.info("Avg Time: {}".format(total_time / (count - 1)))
+        cv2.imshow("pres", src_im)
+        if cv2.waitKey(0) == ord("q"):
+            break
+    cv2.destroyAllWindows()
 
     PresOutput.close()

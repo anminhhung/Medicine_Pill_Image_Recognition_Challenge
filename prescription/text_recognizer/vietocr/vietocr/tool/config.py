@@ -17,9 +17,9 @@ class Cfg(dict):
         self.__dict__ = self
 
     @staticmethod
-    def load_config_from_file(fname):
-        #base_config = download_config(url_config['base'])
-        base_config = {}
+    def load_config_from_file(base_cfg, fname):
+        with open(base_cfg, encoding='utf-8') as f:
+            base_config = yaml.safe_load(f)
         with open(fname, encoding='utf-8') as f:
             config = yaml.safe_load(f)
         base_config.update(config)

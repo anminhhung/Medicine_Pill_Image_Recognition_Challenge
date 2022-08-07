@@ -2,6 +2,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_ROOT = BASE_DIR
+print(BASE_DIR + "/data/")
+INPUT_ROOT =  BASE_DIR + "/data/"
 OUTPUT_ROOT = BASE_DIR + "/output/"
 
 

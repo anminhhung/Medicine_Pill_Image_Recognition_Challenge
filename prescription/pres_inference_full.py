@@ -238,7 +238,7 @@ def crop_bbox(img, box):
 
 def write_text(image, result_text, point):
     pil_img = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    draw =  ImageDraw.Draw(pil_img)
+    draw = ImageDraw.Draw(pil_img)
     point = (point[0], int(point[1]-30))
     draw.text(point, result_text, (255, 0, 0), font=font_text)
     cv2_img = cv2.cvtColor(np.asarray(pil_img), cv2.COLOR_RGB2BGR)
